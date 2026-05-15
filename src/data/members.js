@@ -81,7 +81,7 @@ export const members = [
     name: 'Adriana Rozo',
     role: 'Ingeniera de Sistemas · Frontend & Data',
     location: 'Colombia',
-    photo: '',
+    photo: 'adri.jpeg',
     initials: 'AR',
     shortBio:
       'Ingeniera de Sistemas con experiencia en desarrollo Frontend (Angular, TypeScript) y análisis espacial / temporal de datos con Python.',
@@ -130,7 +130,7 @@ export const members = [
     name: 'Esteban Hernández',
     role: 'Líder · Jefe de Cooperación Científica e Investigación',
     location: 'Bogotá, Colombia',
-    photo: '',
+    photo: 'edj.jpeg',
     initials: 'EH',
     shortBio:
       'Cofundador de Cybercolombia y experto en Computación de Alto Rendimiento, IA y Computación Cuántica. Lidera alianzas estratégicas entre academia, industria y organismos internacionales.',
