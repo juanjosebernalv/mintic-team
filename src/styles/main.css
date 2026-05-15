@@ -252,7 +252,7 @@ main { flex: 1; }
 /* Grid de cards */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
 }
 
@@ -312,6 +312,7 @@ main { flex: 1; }
   margin: 0;
   color: var(--text-muted);
   font-size: .95rem;
+  flex-grow: 1;
 }
 .card__edu {
   display: flex;
@@ -324,11 +325,15 @@ main { flex: 1; }
 }
 .card__footer {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  flex-direction: column;
+  gap: .75rem;
   margin-top: auto;
   padding-top: .75rem;
+}
+
+.card__cta {
+  width: 100%;
+  justify-content: center;
 }
 
 /* Avatar */
@@ -377,10 +382,16 @@ main { flex: 1; }
   transform: translateY(24px);
   transition: opacity var(--t-slow) var(--ease), transform var(--t-slow) var(--ease);
   will-change: opacity, transform;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+.reveal > .card {
+  flex: 1;
 }
 
 /* Parallax */
@@ -551,6 +562,10 @@ main { flex: 1; }
   .detail__grid { grid-template-columns: 1fr; gap: 2rem; }
   .hero { padding: 5rem 0 3rem; }
   .section { padding: 3rem 0; }
+}
+
+@media (max-width: 700px) {
+  .grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 540px) {

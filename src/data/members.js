@@ -125,6 +125,41 @@ export const members = [
     accent: '#9ece6a'
   },
   {
+    id: 4,
+    slug: 'esteban-hernandez',
+    name: 'Esteban Hernández',
+    role: 'Líder del Equipo · Lorem Ipsum',
+    location: 'Colombia',
+    photo: '',
+    initials: 'EH',
+    shortBio:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula sapien ac nisl fermentum, sed tincidunt libero suscipit.',
+    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula sapien ac nisl fermentum, sed tincidunt libero suscipit. Proin blandit eros at lectus faucibus, vel gravida lectus auctor. Vivamus ac turpis id turpis fermentum pellentesque vel at dui. Cras tincidunt sapien vitae nulla ultricies, nec feugiat sapien posuere.',
+    workplace: 'Lorem Ipsum — Organización',
+    education: [
+      {
+        institution: 'Universidad Lorem Ipsum',
+        degree: 'Lorem Ipsum Degree',
+        period: '2000 — 2005'
+      }
+    ],
+    experience: [
+      {
+        company: 'Lorem Ipsum Corp',
+        role: 'Lorem Ipsum Role',
+        period: '2020 — presente',
+        summary:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula sapien ac nisl fermentum.'
+      }
+    ],
+    skills: ['Lorem', 'Ipsum', 'Dolor', 'Sit', 'Amet', 'Consectetur'],
+    social: {
+      linkedin: '',
+      email: ''
+    },
+    accent: '#ff9e64'
+  },
+  {
     id: 3,
     slug: 'juan-jose-bernal',
     name: 'Juan José Bernal Villamarín',

@@ -31,7 +31,7 @@ export default function MemberCard({ member }) {
 
       <div className="card__footer">
         <SocialLinks social={member.social} accent={member.accent} />
-        <Link to={`/member/${member.slug}`} className="btn btn--ghost">
+        <Link to={`/member/${member.slug}`} className="btn btn--ghost card__cta">
           Ver perfil →
         </Link>
       </div>
