@@ -186,7 +186,7 @@ export const members = [
     skills: ['HPC', 'Inteligencia Artificial', 'Computación Cuántica', 'AWS', 'Python', 'CUDA', 'Apache Spark', 'Machine Learning', 'Big Data'],
     social: {
       linkedin: 'https://www.linkedin.com/in/hpccol',
-      email: 'eshernan@gmail.com'
+      email: 'esteban.hernandez@cybercolombia.org'
     },
     accent: '#ff9e64'
   },
