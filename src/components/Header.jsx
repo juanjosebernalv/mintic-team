@@ -10,8 +10,20 @@ export default function Header() {
           </span>
         </Link>
         <nav className="nav" aria-label="Navegación principal">
-          <Link to="/">Equipo</Link>
-          <a href="#contacto">Contacto</a>
+          <a
+            href="#team"
+            onClick={e => {
+              e.preventDefault();
+              document.getElementById('team')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >Equipo</a>
+          <a
+            href="#codigo"
+            onClick={e => {
+              e.preventDefault();
+              document.getElementById('codigo')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >Código</a>
         </nav>
       </div>
     </header>
