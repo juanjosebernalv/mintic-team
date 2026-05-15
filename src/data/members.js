@@ -128,34 +128,65 @@ export const members = [
     id: 4,
     slug: 'esteban-hernandez',
     name: 'Esteban Hernández',
-    role: 'Líder del Equipo · Lorem Ipsum',
-    location: 'Colombia',
+    role: 'Líder · Jefe de Cooperación Científica e Investigación',
+    location: 'Bogotá, Colombia',
     photo: '',
     initials: 'EH',
     shortBio:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula sapien ac nisl fermentum, sed tincidunt libero suscipit.',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula sapien ac nisl fermentum, sed tincidunt libero suscipit. Proin blandit eros at lectus faucibus, vel gravida lectus auctor. Vivamus ac turpis id turpis fermentum pellentesque vel at dui. Cras tincidunt sapien vitae nulla ultricies, nec feugiat sapien posuere.',
-    workplace: 'Lorem Ipsum — Organización',
+      'Cofundador de Cybercolombia y experto en Computación de Alto Rendimiento, IA y Computación Cuántica. Lidera alianzas estratégicas entre academia, industria y organismos internacionales.',
+    bio: 'Al frente de las alianzas científicas e investigativas de Cybercolombia, impulsa proyectos colaborativos en computación de alto rendimiento, inteligencia artificial y computación cuántica. Como cofundador, su trayectoria ha estado guiada por la misión de acelerar la experimentación científica mediante tecnologías de cómputo avanzado. Con dominio en servicios AWS y metodologías de ciencia de datos, lidera la optimización del almacenamiento y transporte de datos en entornos distribuidos, garantizando que las iniciativas de investigación generen avances tangibles.',
+    workplace: 'Cybercolombia — Jefe de Cooperación Científica',
     education: [
       {
-        institution: 'Universidad Lorem Ipsum',
-        degree: 'Lorem Ipsum Degree',
-        period: '2000 — 2005'
+        institution: 'Universidad Distrital Francisco José de Caldas',
+        degree: 'Doctorado en Computación de Alto Rendimiento',
+        period: '2012 — 2017'
+      },
+      {
+        institution: 'Universitat Oberta de Catalunya',
+        degree: 'Máster en Software Libre',
+        period: '2009 — 2010'
+      },
+      {
+        institution: 'Universidad Autónoma de Bucaramanga',
+        degree: 'Máster en Sistemas de E-Learning de Alto Rendimiento',
+        period: '2007 — 2010'
       }
     ],
     experience: [
       {
-        company: 'Lorem Ipsum Corp',
-        role: 'Lorem Ipsum Role',
-        period: '2020 — presente',
+        company: 'Cybercolombia',
+        role: 'Jefe de Cooperación Científica e Investigación',
+        period: 'jun 2024 — presente',
         summary:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vehicula sapien ac nisl fermentum.'
+          'Lidera alianzas con universidades, institutos de investigación y la industria. Dirige iniciativas conjuntas de investigación en HPC, IA y computación cuántica, asegura financiamiento y supervisa la difusión de resultados.'
+      },
+      {
+        company: 'SCALAC — Sistema de Cómputo Avanzado para América Latina y el Caribe',
+        role: 'Director Ejecutivo',
+        period: 'ene 2025 — dic 2025',
+        summary:
+          'Coordinó iniciativas regionales de HPC e IA, estableció marcos de cooperación entre instituciones miembro y representó a SCALAC ante organismos internacionales en redes globales de HPC e IA.'
+      },
+      {
+        company: 'Mercado Libre',
+        role: 'Experto Senior en Machine Learning',
+        period: 'jul 2022 — abr 2024',
+        summary:
+          'Soporte a múltiples equipos en problemas de rendimiento y cómputo distribuido: procesamiento de anuncios, almacenamiento distribuido y respuestas de sub-milisegundo.'
+      },
+      {
+        company: 'Amazon Web Services (AWS)',
+        role: 'Arquitecto Big Data, Data Lake & Analytics',
+        period: 'may 2020 — jun 2022',
+        summary:
+          'Colaboró con equipos de ventas y clientes para implementar servicios AWS (EC2, S3, DynamoDB, EMR, Redshift). Especialista en HPC para pronóstico del tiempo, dinámica molecular y simulación CFD.'
       }
     ],
-    skills: ['Lorem', 'Ipsum', 'Dolor', 'Sit', 'Amet', 'Consectetur'],
+    skills: ['HPC', 'Inteligencia Artificial', 'Computación Cuántica', 'AWS', 'Python', 'CUDA', 'Apache Spark', 'Machine Learning', 'Big Data'],
     social: {
-      linkedin: '',
-      email: ''
+      linkedin: 'https://www.linkedin.com/in/hpccol',
+      email: 'eshernan@gmail.com'
     },
     accent: '#ff9e64'
   },

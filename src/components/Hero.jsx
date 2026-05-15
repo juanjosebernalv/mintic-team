@@ -1,4 +1,5 @@
 import Parallax from './Parallax.jsx';
+import raizLogo from '../assets/raiz-logo-1.png';
 
 export default function Hero() {
   return (
@@ -12,15 +13,18 @@ export default function Hero() {
       </Parallax>
 
       <div className="container hero__content">
-        <p className="hero__eyebrow">— Nuestro equipo</p>
-        <h1 className="hero__title">
-          Personas que construyen <span className="accent">soluciones</span>
-          <br />
-          con propósito.
-        </h1>
+        {/* Logo centrado */}
+        <div className="hero__logo-wrap">
+          <img
+            src={raizLogo}
+            alt="rAIz — Agricultura Inteligente Colombiana"
+            className="hero__logo"
+          />
+        </div>
+
         <p className="hero__lead">
-          Conoce al equipo detrás del proyecto: ingenieros, arquitectos y desarrolladores
-          comprometidos con la calidad, la escalabilidad y el trabajo colaborativo.
+          Datos climáticos predictivos e inteligencia de suelos para ayudar al campo colombiano
+          a anticipar riesgos, reducir pérdidas y mejorar la productividad agrícola.
         </p>
         <button
           className="btn btn--primary"

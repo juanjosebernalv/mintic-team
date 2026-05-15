@@ -6,7 +6,7 @@ import { members } from '../data/members.js';
 
 export default function Home() {
   useEffect(() => {
-    document.title = 'Nuestro Equipo · Team Showcase';
+    document.title = 'rAIz · Agricultura Inteligente Colombiana';
   }, []);
 
   return (
@@ -16,11 +16,11 @@ export default function Home() {
       <section id="team" className="section">
         <div className="container">
           <header className="section__head">
-            <p className="section__eyebrow">— Equipo</p>
-            <h2 className="section__title">Conoce a nuestros integrantes</h2>
+            <p className="section__eyebrow">— Equipo rAIz</p>
+            <h2 className="section__title">Las personas detrás del proyecto</h2>
             <p className="section__lead">
-              Un equipo diverso de profesionales con experiencia en arquitectura, frontend,
-              datos y liderazgo técnico.
+              Un equipo diverso de ingenieros, científicos de datos y líderes técnicos
+              comprometidos con transformar el agro colombiano mediante tecnología e inteligencia artificial.
             </p>
           </header>
 

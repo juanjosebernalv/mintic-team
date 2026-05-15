@@ -5,24 +5,29 @@
    ============================================================ */
 
 :root {
-  /* Paleta base */
-  --bg: #0b0d12;
-  --bg-elev: #11141b;
-  --bg-elev-2: #161a23;
-  --surface: #1a1f2b;
-  --border: #1f2532;
-  --border-strong: #2a3142;
+  /* Paleta base — rAIz */
+  --bg: #090c0e;
+  --bg-elev: #0f1410;
+  --bg-elev-2: #141a14;
+  --surface: #192019;
+  --border: #1e2a1e;
+  --border-strong: #2a3d2a;
 
-  --text: #e6e9ef;
-  --text-muted: #a6adbb;
-  --text-dim: #6b7280;
+  --text: #e8ece6;
+  --text-muted: #a8b5a4;
+  --text-dim: #667060;
 
-  --accent: #7aa2f7;
-  --accent-soft: #7aa2f733;
+  /* Turquesa / cian del logo — "AI" */
+  --accent: #2dd4bf;
+  --accent-soft: #2dd4bf28;
 
-  --success: #9ece6a;
-  --warn: #e0af68;
-  --danger: #f7768e;
+  /* Cobre/tierra del logo — secondary */
+  --copper: #c47a3a;
+  --copper-soft: #c47a3a28;
+
+  --success: #86c87a;
+  --warn: #d4a947;
+  --danger: #e07068;
 
   --radius-sm: 8px;
   --radius: 14px;
@@ -122,10 +127,21 @@ main { flex: 1; }
   align-items: center;
   gap: .65rem;
   color: var(--text);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -.01em;
 }
-.brand svg { color: var(--accent); }
+
+/* rAIz wordmark */
+.brand__logo-text {
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  color: var(--text);
+}
+.brand__ai {
+  color: var(--accent);
+  font-style: italic;
+}
 .nav { display: flex; gap: 1.5rem; }
 .nav a {
   color: var(--text-muted);
@@ -137,10 +153,35 @@ main { flex: 1; }
 /* Footer */
 .site-footer {
   border-top: 1px solid var(--border);
-  padding: 2rem 0;
+  padding: 2.5rem 0;
   margin-top: 4rem;
   color: var(--text-dim);
   font-size: .875rem;
+}
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .35rem;
+  text-align: center;
+}
+.footer__brand {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  color: var(--text);
+}
+.footer__tagline {
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  color: var(--text-dim);
+  margin: 0;
+}
+.footer__copy {
+  margin: .5rem 0 0;
+  font-size: .8rem;
+  color: var(--text-dim);
 }
 
 /* Buttons */
@@ -176,7 +217,7 @@ main { flex: 1; }
 /* Hero */
 .hero {
   position: relative;
-  padding: 8rem 0 6rem;
+  padding: 4rem 0 6rem;
   overflow: hidden;
   isolation: isolate;
 }
@@ -199,23 +240,39 @@ main { flex: 1; }
   height: 520px;
   left: -120px;
   top: -120px;
-  background: radial-gradient(circle, #7aa2f7 0%, transparent 60%);
+  background: radial-gradient(circle, #2dd4bf 0%, transparent 60%);
 }
 .hero__glow--b {
   width: 420px;
   height: 420px;
   right: -100px;
   top: 60px;
-  background: radial-gradient(circle, #bb9af7 0%, transparent 60%);
+  background: radial-gradient(circle, #c47a3a 0%, transparent 60%);
 }
 
-.hero__content { max-width: 760px; }
+.hero__content { max-width: 760px; text-align: center; }
 .hero__eyebrow {
   color: var(--text-dim);
   text-transform: uppercase;
   letter-spacing: .2em;
   font-size: .78rem;
   margin-bottom: 1.25rem;
+}
+
+/* Logo del hero */
+.hero__logo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+.hero__logo {
+  width: clamp(260px, 36vw, 380px);
+  height: auto;
+  mix-blend-mode: screen;
+  filter:
+    drop-shadow(0 0 40px #2dd4bf33)
+    drop-shadow(0 0 80px #c47a3a22);
 }
 .hero__title {
   background: linear-gradient(180deg, #fff 0%, #cbd2e0 80%);
@@ -224,7 +281,7 @@ main { flex: 1; }
   color: transparent;
 }
 .hero__title .accent {
-  background: linear-gradient(120deg, #7aa2f7, #bb9af7);
+  background: linear-gradient(120deg, #2dd4bf, #c47a3a);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
