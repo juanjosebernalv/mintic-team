@@ -59,7 +59,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: transparent;
   color: var(--text);
   font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
@@ -106,6 +106,30 @@ p { margin: 0 0 1em; color: var(--text-muted); }
 /* App layout */
 .app { min-height: 100%; display: flex; flex-direction: column; }
 main { flex: 1; }
+
+/* Fondo parallax global */
+.app-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+}
+.app-bg__parallax {
+  position: absolute;
+  inset: -25%;
+  width: 150%;
+  height: 150%;
+}
+.app-bg__img {
+  width: 100%;
+  height: 100%;
+  background: url('/bg-maiz.png') center / cover no-repeat;
+}
+.app-bg__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(9, 12, 14, 0.90);
+}
 
 /* Header */
 .site-header {
