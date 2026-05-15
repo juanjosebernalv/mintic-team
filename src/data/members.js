@@ -120,7 +120,7 @@ export const members = [
     skills: ['Angular', 'TypeScript', 'Python', 'Pandas', 'GeoPandas', 'rasterio', 'Random Forest', 'ARIMA'],
     social: {
       linkedin: 'https://www.linkedin.com/in/adrianarozo-9b02725b',
-      email: 'adrianis@gmail.com'
+      email: 'adrianarozo@gmail.com'
     },
     accent: '#9ece6a'
   },
@@ -196,7 +196,7 @@ export const members = [
     name: 'Juan José Bernal Villamarín',
     role: 'Tech Lead · Senior Frontend / Fullstack Developer',
     location: 'Bogotá, Colombia',
-    photo: '',
+    photo: 'src/assets/jj.png',
     initials: 'JB',
     shortBio:
       'Profesional con más de 20 años de experiencia en desarrollo de aplicaciones frontend. Líder técnico, comunicador y apasionado por la tecnología.',
