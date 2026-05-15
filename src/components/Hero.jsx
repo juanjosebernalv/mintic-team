@@ -22,10 +22,13 @@ export default function Hero() {
           Conoce al equipo detrás del proyecto: ingenieros, arquitectos y desarrolladores
           comprometidos con la calidad, la escalabilidad y el trabajo colaborativo.
         </p>
-        <a href="#team" className="btn btn--primary">
+        <button
+          className="btn btn--primary"
+          onClick={() => document.getElementById('team')?.scrollIntoView({ behavior: 'smooth' })}
+        >
           Conocer al equipo
           <span aria-hidden="true">↓</span>
-        </a>
+        </button>
       </div>
     </section>
   );
