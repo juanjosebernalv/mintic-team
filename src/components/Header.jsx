@@ -24,6 +24,7 @@ export default function Header() {
               document.getElementById('codigo')?.scrollIntoView({ behavior: 'smooth' });
             }}
           >Código</a>
+          <Link to="/proceso">Proceso</Link>
         </nav>
       </div>
     </header>

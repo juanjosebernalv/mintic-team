@@ -3,6 +3,7 @@ import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import Home from './pages/Home.jsx';
 import MemberDetail from './pages/MemberDetail.jsx';
+import Proceso from './pages/Proceso.jsx';
 import NotFound from './pages/NotFound.jsx';
 import Parallax from './components/Parallax.jsx';
 
@@ -20,6 +21,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/member/:slug" element={<MemberDetail />} />
+          <Route path="/proceso" element={<Proceso />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
