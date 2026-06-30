@@ -1008,6 +1008,53 @@ main { flex: 1; }
 }
 
 /* ── Mobile (single column) ──────────────────────────────── */
+/* ===== Leaflet map overrides ============================================ */
+
+/* Tooltip del mapa coroplético */
+.agro-map-tip {
+  background: #0f1410 !important;
+  border: 1px solid #2a3d2a !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif !important;
+  font-size: .8rem !important;
+  line-height: 1.55 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .5) !important;
+  color: #a8b5a4 !important;
+}
+
+.agro-map-tip::before { display: none !important; }
+
+/* Dark basemap adjustments */
+.leaflet-container {
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  background: #090c0e;
+}
+
+.leaflet-control-zoom a {
+  background: #0f1410 !important;
+  border-color: #2a3d2a !important;
+  color: #a8b5a4 !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: #141a14 !important;
+  color: #e8ece6 !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(9, 12, 14, 0.8) !important;
+  color: #667060 !important;
+  font-size: .65rem !important;
+}
+
+.leaflet-control-attribution a { color: #2dd4bf !important; }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
 @media (max-width: 768px) {
   .ptl-list::before {
     left: 24px;

@@ -8,7 +8,10 @@ import {
   Leaf, TrendingUp, Zap, Target,
   ChevronUp, ChevronDown, ChevronsUpDown,
   AlertCircle, SlidersHorizontal, ChevronLeft, ChevronRight,
+  MapPin,
 } from 'lucide-react';
+import { MapContainer, TileLayer, GeoJSON as LeafGeoJSON } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
 // ── Palette ───────────────────────────────────────────────────────────────
 const C = {
@@ -176,6 +179,196 @@ function STh({ field, label, sortField, sortDir, onSort }) {
   );
 }
 
+// ── Choropleth color (dark → turquesa) ───────────────────────────────────
+function choroplethColor(t) {
+  const lerp = (a, b, u) => Math.round(a + (b - a) * u);
+  return `rgb(${lerp(14,45,t)},${lerp(38,212,t)},${lerp(20,191,t)})`;
+}
+
+// ── Map Choropleth ────────────────────────────────────────────────────────
+const GEO_URL = 'https://gist.githubusercontent.com/john-guerra/43c7656821069d00dcbc/raw/3aadedf47badbdac823b00dbe259f6bc6d9e1899/colombia.geo.json';
+
+const METRICS_MAP = {
+  rendimiento_ton_ha:  { label: 'Rendimiento promedio',    format: v => `${fmtF(v)} ton/ha`, key: 'rendimiento' },
+  eficiencia_recursos: { label: 'Eficiencia de recursos',  format: v => `${Math.round(v)}%`,  key: 'eficiencia'  },
+  indice_confianza:    { label: 'Confianza del modelo',    format: v => `${Math.round(v)}%`,  key: 'confianza'   },
+  toneladas_estimadas: { label: 'Toneladas estimadas',     format: v => `${fmt(v)} ton`,       key: 'toneladas'   },
+};
+
+function MapChoropleth({ data }) {
+  const [geoData, setGeoData] = useState(null);
+  const [status,  setStatus]  = useState('loading');
+  const [metric,  setMetric]  = useState('rendimiento_ton_ha');
+
+  useEffect(() => {
+    fetch(GEO_URL)
+      .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+      .then(geo => {
+        const features = geo.features.filter(f => {
+          const n = (f.properties.NOMBRE_DPT || f.properties.name || '').toUpperCase();
+          return n.includes('CUNDINAMARCA') || n.includes('BOYAC');
+        });
+        setGeoData({ type: 'FeatureCollection', features });
+        setStatus('ok');
+      })
+      .catch(() => setStatus('error'));
+  }, []);
+
+  const deptStats = useMemo(() => {
+    const m = {};
+    ['Cundinamarca', 'Boyacá'].forEach(dept => {
+      const sub = data.filter(d => d.departamento === dept);
+      if (!sub.length) return;
+      m[dept] = {
+        rendimiento: avgF(sub, d => d.rendimiento_ton_ha),
+        eficiencia:  avgF(sub, d => d.eficiencia_recursos),
+        confianza:   avgF(sub, d => d.indice_confianza),
+        toneladas:   sumF(sub, d => d.toneladas_estimadas),
+        registros:   sub.length,
+      };
+    });
+    return m;
+  }, [data, metric]);
+
+  const metricCfg  = METRICS_MAP[metric];
+  const statVals   = Object.values(deptStats).map(s => s[metricCfg.key]).filter(v => v != null);
+  const lo = statVals.length ? Math.min(...statVals) : 0;
+  const hi = statVals.length ? Math.max(...statVals) : 100;
+
+  const getDept = f => {
+    const n = (f.properties.NOMBRE_DPT || f.properties.name || '').toUpperCase();
+    if (n.includes('CUNDINAMARCA')) return 'Cundinamarca';
+    if (n.includes('BOYAC')) return 'Boyacá';
+    return null;
+  };
+
+  const geoStyle = f => {
+    const key   = getDept(f);
+    const stats = key ? deptStats[key] : null;
+    const val   = stats ? stats[metricCfg.key] : null;
+    const t     = val != null ? Math.max(0, Math.min(1, (val - lo) / ((hi - lo) || 1))) : null;
+    return {
+      fillColor:   t != null ? choroplethColor(t) : '#141a14',
+      weight:      2,
+      color:       '#2dd4bf',
+      fillOpacity: t != null ? 0.72 : 0.25,
+    };
+  };
+
+  const onEachFeature = (f, layer) => {
+    const key   = getDept(f);
+    const stats = key ? deptStats[key] : null;
+    const baseOpacity = stats ? 0.72 : 0.25;
+
+    layer.on({
+      mouseover: e => e.target.setStyle({ weight: 3.5, fillOpacity: 0.9 }),
+      mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: baseOpacity }),
+    });
+
+    if (key) {
+      const body = stats
+        ? `<strong style="font-size:13px;color:#e8ece6">${key}</strong><br/>
+           <span style="color:#a8b5a4">${metricCfg.label}:</span>
+           <strong style="color:#2dd4bf"> ${metricCfg.format(stats[metricCfg.key])}</strong><br/>
+           <span style="color:#667060;font-size:11px">${stats.registros} registros analizados</span>`
+        : `<strong style="color:#e8ece6">${key}</strong><br/><span style="color:#667060">Sin datos con filtros actuales</span>`;
+      layer.bindTooltip(body, {
+        className: 'agro-map-tip',
+        sticky: true,
+        direction: 'top',
+        offset: [0, -6],
+      });
+    }
+  };
+
+  return (
+    <div style={{ ...CARD, marginBottom: '1.25rem' }}>
+      {/* Header */}
+      <div style={{ display:'flex', flexWrap:'wrap', alignItems:'flex-start', justifyContent:'space-between', gap:'1rem', marginBottom:'1.1rem' }}>
+        <div>
+          <h3 style={CHART_H3}>Mapa Georeferenciado — Cundinamarca & Boyacá</h3>
+          <p style={{ ...EYEBROW, marginTop:'.2rem' }}>Predicciones del modelo por departamento</p>
+        </div>
+        <div style={{ display:'flex', flexDirection:'column', gap:'.25rem' }}>
+          <span style={EYEBROW}>Métrica</span>
+          <div style={{ position:'relative' }}>
+            <select value={metric} onChange={e => setMetric(e.target.value)} style={SEL}>
+              {Object.entries(METRICS_MAP).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
+            </select>
+            <ChevronDown size={12} style={{ position:'absolute', right:'.6rem', top:'50%', transform:'translateY(-50%)', color:C.dim, pointerEvents:'none' }}/>
+          </div>
+        </div>
+      </div>
+
+      {/* Map area */}
+      {status === 'loading' && (
+        <div style={{ height:430, display:'flex', alignItems:'center', justifyContent:'center', color:C.dim, flexDirection:'column', gap:'.75rem' }}>
+          <MapPin size={32} style={{ opacity:.4, animation:'spin 1.5s linear infinite' }}/>
+          <span>Cargando datos geográficos…</span>
+        </div>
+      )}
+      {status === 'error' && (
+        <div style={{ height:430, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', color:C.dim, gap:'.75rem' }}>
+          <AlertCircle size={36} style={{ opacity:.5 }}/>
+          <p style={{ margin:0 }}>No se pudieron cargar los límites departamentales.</p>
+          <p style={{ margin:0, fontSize:'.8rem' }}>Verifica tu conexión a internet e intenta recargar.</p>
+        </div>
+      )}
+      {status === 'ok' && (
+        <div style={{ borderRadius:10, overflow:'hidden', height:430 }}>
+          <MapContainer
+            center={[5.6, -73.1]}
+            zoom={7}
+            scrollWheelZoom={false}
+            style={{ height:'100%', background: C.bg }}
+          >
+            <TileLayer
+              url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org">OpenStreetMap</a> &copy; <a href="https://carto.com">CARTO</a>'
+            />
+            {geoData && (
+              <LeafGeoJSON
+                key={`${metric}-${data.length}`}
+                data={geoData}
+                style={geoStyle}
+                onEachFeature={onEachFeature}
+              />
+            )}
+          </MapContainer>
+        </div>
+      )}
+
+      {/* Stats + legend row */}
+      <div style={{ display:'flex', flexWrap:'wrap', alignItems:'center', justifyContent:'space-between', gap:'1rem', marginTop:'1.1rem' }}>
+        <div style={{ display:'flex', gap:'.85rem', flexWrap:'wrap' }}>
+          {['Cundinamarca', 'Boyacá'].map((dept, i) => {
+            const stats = deptStats[dept];
+            const val   = stats ? stats[metricCfg.key] : null;
+            const t     = val != null ? Math.max(0, Math.min(1, (val - lo) / ((hi - lo) || 1))) : null;
+            return (
+              <div key={dept} style={{ display:'flex', alignItems:'center', gap:'.7rem', padding:'.6rem 1rem', background:C.card2, borderRadius:10, border:`1px solid ${C.borderStr}` }}>
+                <div style={{ width:10, height:32, borderRadius:4, background: t != null ? choroplethColor(t) : C.borderStr, flexShrink:0 }}/>
+                <div>
+                  <div style={{ fontSize:'.78rem', fontWeight:600, color: i === 0 ? C.turquesa : C.dorado }}>{dept}</div>
+                  {stats
+                    ? <div style={{ fontSize:'.88rem', color:C.text, fontWeight:700 }}>{metricCfg.format(val)}</div>
+                    : <div style={{ fontSize:'.8rem', color:C.dim }}>Sin datos</div>
+                  }
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div style={{ display:'flex', alignItems:'center', gap:'.55rem', fontSize:'.74rem', color:C.dim }}>
+          <span>Bajo</span>
+          <div style={{ height:9, width:160, borderRadius:4, background:'linear-gradient(to right,rgb(14,38,20),rgb(45,212,191))' }}/>
+          <span>Alto</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Main component ────────────────────────────────────────────────────────
 export default function AgricultureDashboard() {
   const [filters, setFilters] = useState({ dept:'all', cultivo:'all', epoca:'all', cond:'all' });
@@ -274,20 +467,6 @@ export default function AgricultureDashboard() {
     return Object.entries(m).map(([name, value]) => ({ name, value: Math.round(value) }));
   }, [data]);
 
-  // Chart 6: heatmap
-  const heatmap = useMemo(() => {
-    const mx = {};
-    data.forEach(d => {
-      const k = `${d.cultivo}||${d.mes}`;
-      if (!mx[k]) mx[k] = { t:0, n:0 };
-      mx[k].t += d.rendimiento_ton_ha; mx[k].n++;
-    });
-    const crops = [...new Set(data.map(d=>d.cultivo))].sort();
-    const months = [...new Set(data.map(d=>d.mes))].sort((a,b)=>a-b);
-    const get = (c,m) => { const e=mx[`${c}||${m}`]; return e ? +(e.t/e.n).toFixed(1) : null; };
-    const vals = Object.values(mx).map(e=>e.t/e.n);
-    return { crops, months, get, lo:vals.length?Math.min(...vals):0, hi:vals.length?Math.max(...vals):1 };
-  }, [data]);
 
   // Table: sorted + paginated
   const tableRows = useMemo(() => [...data].sort((a, b) => {
@@ -487,50 +666,8 @@ export default function AgricultureDashboard() {
             </div>
           </div>
 
-          {/* Chart 6: Heatmap rendimiento × (cultivo, mes) */}
-          <div style={{ ...CARD, marginBottom:'1.25rem' }}>
-            <h3 style={CHART_H3}>Mapa de Calor — Rendimiento (ton/ha)</h3>
-            <p style={{ ...EYEBROW, marginBottom:'1.1rem' }}>Cultivo × mes — promedio por celda</p>
-            <div style={{ overflowX:'auto' }}>
-              <table style={{ borderCollapse:'collapse', minWidth:600, fontSize:'.78rem' }}>
-                <thead>
-                  <tr>
-                    <th style={{ padding:'.4rem .75rem', color:C.dim, fontWeight:600, textAlign:'left', borderBottom:`1px solid ${C.border}`, background:C.card, minWidth:88 }}>Cultivo</th>
-                    {heatmap.months.map(m => (
-                      <th key={m} style={{ padding:'.4rem .55rem', color:C.dim, fontWeight:600, textAlign:'center', borderBottom:`1px solid ${C.border}`, background:C.card, minWidth:50 }}>
-                        {MESES[m-1].slice(0,3)}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {heatmap.crops.map(cultivo => (
-                    <tr key={cultivo}>
-                      <td style={{ padding:'.42rem .75rem', color:C.muted, fontWeight:500, borderBottom:`1px solid ${C.border}`, whiteSpace:'nowrap' }}>{cultivo}</td>
-                      {heatmap.months.map(m => {
-                        const v = heatmap.get(cultivo, m);
-                        return (
-                          <td key={m} title={v!=null?`${cultivo} — ${MESES[m-1]}: ${v} ton/ha`:'Sin datos'} style={{
-                            padding:'.48rem .4rem', textAlign:'center',
-                            background: heatColor(v, heatmap.lo, heatmap.hi),
-                            color: v!=null ? 'rgba(0,0,0,.78)' : C.dim,
-                            fontWeight:600, borderBottom:`1px solid ${C.border}`, borderLeft:`1px solid ${C.border}`,
-                          }}>
-                            {v ?? '—'}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div style={{ display:'flex', alignItems:'center', gap:'.6rem', marginTop:'.9rem', fontSize:'.74rem', color:C.dim }}>
-                <span>Bajo</span>
-                <div style={{ height:9, width:180, borderRadius:4, background:'linear-gradient(to right,rgb(220,100,80),rgb(212,169,71),rgb(134,200,122))' }}/>
-                <span>Alto</span>
-              </div>
-            </div>
-          </div>
+          {/* Mapa georeferenciado — reemplaza el heatmap */}
+          <MapChoropleth data={data} />
 
           {/* ── Table ───────────────────────────────────────────────────── */}
           <div style={CARD}>
