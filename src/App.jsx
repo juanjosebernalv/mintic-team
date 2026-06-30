@@ -4,6 +4,7 @@ import Footer from './components/Footer.jsx';
 import Home from './pages/Home.jsx';
 import MemberDetail from './pages/MemberDetail.jsx';
 import Proceso from './pages/Proceso.jsx';
+import Dashboard from './pages/Dashboard.jsx';
 import NotFound from './pages/NotFound.jsx';
 import Parallax from './components/Parallax.jsx';
 
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/member/:slug" element={<MemberDetail />} />
           <Route path="/proceso" element={<Proceso />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

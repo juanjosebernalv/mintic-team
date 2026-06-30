@@ -25,6 +25,7 @@ export default function Header() {
             }}
           >Código</a>
           <Link to="/proceso">Proceso</Link>
+          <Link to="/dashboard">Dashboard</Link>
         </nav>
       </div>
     </header>
