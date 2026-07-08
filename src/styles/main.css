@@ -1101,3 +1101,233 @@ main { flex: 1; }
     height: 44px;
   }
 }
+
+/* ============================================================
+   Deep Learning Demo
+   ============================================================ */
+
+.dl-demo {
+  padding: 80px 0 100px;
+  min-height: 100vh;
+}
+
+.dl-demo__header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.dl-demo__title {
+  font-size: clamp(1.6rem, 3vw + 1rem, 2.8rem);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.dl-demo__title .accent {
+  color: var(--accent);
+}
+
+.dl-demo__sub {
+  color: var(--text-muted);
+  max-width: 560px;
+  margin: 0 auto;
+  font-size: .95rem;
+}
+
+/* stats bar */
+.dl-demo__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.dl-stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 100px;
+}
+
+.dl-stat__label {
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-dim);
+}
+
+.dl-stat__value {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.dl-stat__value--hi {
+  color: var(--danger);
+}
+
+/* controls */
+.dl-demo__controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 36px;
+}
+
+.dl-btn {
+  padding: 10px 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+  white-space: nowrap;
+}
+
+.dl-btn--primary {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.dl-btn--primary:hover,
+.dl-btn--active {
+  background: var(--accent);
+  color: #000;
+}
+
+.dl-progress-wrap {
+  flex: 1;
+  max-width: 320px;
+  height: 6px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.dl-progress {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--copper));
+  border-radius: 99px;
+  transition: width 120ms linear;
+}
+
+/* grid */
+.dl-demo__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.dl-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  overflow: hidden;
+}
+
+.dl-card--wide {
+  grid-column: 1 / -1;
+}
+
+.dl-card--metrics {
+  display: flex;
+  flex-direction: column;
+}
+
+.dl-card__label--mt {
+  margin-top: 20px;
+}
+
+.dl-card__label {
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+
+/* tabs */
+.dl-card__tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+
+.dl-tab {
+  padding: 5px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: .82rem;
+  cursor: pointer;
+  transition: all var(--t-fast) var(--ease);
+}
+
+.dl-tab:hover { color: var(--text); border-color: var(--border); }
+
+.dl-tab--active {
+  background: var(--surface);
+  border-color: var(--border-strong);
+  color: var(--accent);
+}
+
+/* explainer */
+.dl-demo__explainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.dl-explain-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+}
+
+.dl-explain-card h3 {
+  font-size: .9rem;
+  color: var(--accent);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.dl-explain-card p {
+  font-size: .82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .dl-demo__grid {
+    grid-template-columns: 1fr;
+  }
+  .dl-card--wide {
+    grid-column: auto;
+  }
+  .dl-demo__explainer {
+    grid-template-columns: 1fr;
+  }
+  .dl-demo__controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .dl-progress-wrap {
+    max-width: 100%;
+  }
+}

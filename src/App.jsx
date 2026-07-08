@@ -5,6 +5,7 @@ import Home from './pages/Home.jsx';
 import MemberDetail from './pages/MemberDetail.jsx';
 import Proceso from './pages/Proceso.jsx';
 import Dashboard from './pages/Dashboard.jsx';
+import DeepLearning from './pages/DeepLearning.jsx';
 import NotFound from './pages/NotFound.jsx';
 import Parallax from './components/Parallax.jsx';
 
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/member/:slug" element={<MemberDetail />} />
           <Route path="/proceso" element={<Proceso />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/deep-learning" element={<DeepLearning />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

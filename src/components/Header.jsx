@@ -26,6 +26,7 @@ export default function Header() {
           >Código</a>
           <Link to="/proceso">Proceso</Link>
           <Link to="/dashboard">Dashboard</Link>
+          <Link to="/deep-learning">Deep Learning</Link>
         </nav>
       </div>
     </header>
