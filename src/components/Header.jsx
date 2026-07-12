@@ -1,6 +1,47 @@
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 
 export default function Header() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [activeSection, setActiveSection] = useState(null);
+
+  useEffect(() => {
+    if (pathname !== '/') {
+      setActiveSection(null);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    const sections = ['team', 'codigo'];
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  const scrollTo = (id) => (e) => {
+    e.preventDefault();
+    if (pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      }, 120);
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <header className="site-header">
       <div className="container site-header__inner">
@@ -11,22 +52,18 @@ export default function Header() {
         </Link>
         <nav className="nav" aria-label="Navegación principal">
           <a
-            href="#team"
-            onClick={e => {
-              e.preventDefault();
-              document.getElementById('team')?.scrollIntoView({ behavior: 'smooth' });
-            }}
+            href="/#team"
+            onClick={scrollTo('team')}
+            className={activeSection === 'team' ? 'active' : ''}
           >Equipo</a>
           <a
-            href="#codigo"
-            onClick={e => {
-              e.preventDefault();
-              document.getElementById('codigo')?.scrollIntoView({ behavior: 'smooth' });
-            }}
+            href="/#codigo"
+            onClick={scrollTo('codigo')}
+            className={activeSection === 'codigo' ? 'active' : ''}
           >Código</a>
-          <Link to="/proceso">Proceso</Link>
-          <Link to="/dashboard">Dashboard</Link>
-          <Link to="/deep-learning">Deep Learning</Link>
+          <NavLink to="/proceso">Proceso</NavLink>
+          <NavLink to="/dashboard">Dashboard</NavLink>
+          <NavLink to="/deep-learning">Deep Learning</NavLink>
         </nav>
       </div>
     </header>

@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import Home from './pages/Home.jsx';
@@ -9,6 +10,12 @@ import DeepLearning from './pages/DeepLearning.jsx';
 import NotFound from './pages/NotFound.jsx';
 import Parallax from './components/Parallax.jsx';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
 export default function App() {
   return (
     <div className="app">
@@ -18,6 +25,7 @@ export default function App() {
         </Parallax>
         <div className="app-bg__overlay" />
       </div>
+      <ScrollToTop />
       <Header />
       <main>
         <Routes>

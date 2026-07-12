@@ -78,7 +78,7 @@ const steps = [
     description:
       'Evaluamos el rendimiento del modelo con métricas de validación, ajustamos hiperparámetros y verificamos la capacidad de generalización de las predicciones obtenidas.',
     icon: 'CheckCircle',
-    status: 'in_progress',
+    status: 'completed',
   },
   {
     id: 9,
@@ -86,7 +86,7 @@ const steps = [
     description:
       'Implementación de esta sección: un dashboard interactivo que permite explorar las predicciones del modelo por departamento, cultivo y condición climática.',
     icon: 'LayoutDashboard',
-    status: 'in_progress',
+    status: 'completed',
   },
 ];
 
