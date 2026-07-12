@@ -726,10 +726,11 @@ export default function AgricultureDashboard() {
                     <ChevronLeft size={13}/> Anterior
                   </button>
                   {Array.from({ length:Math.min(totalPages,7) },(_,i)=>{
-                    const pg = totalPages<=7 ? i+1 : Math.max(1, Math.min(page-3+i, totalPages-6+i));
-                    return pg>=1&&pg<=totalPages ? (
+                    const start = totalPages<=7 ? 1 : Math.max(1, Math.min(page-3, totalPages-6));
+                    const pg = start + i;
+                    return (
                       <button key={pg} onClick={()=>setPage(pg)} style={BTN_PAGE(pg===page)}>{pg}</button>
-                    ) : null;
+                    );
                   })}
                   <button disabled={page===totalPages} onClick={()=>setPage(p=>p+1)}
                     style={{ ...BTN_PAGE(false), opacity:page===totalPages?.45:1, cursor:page===totalPages?'not-allowed':'pointer', display:'flex', alignItems:'center', gap:'.3rem' }}>
