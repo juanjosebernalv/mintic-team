@@ -5,6 +5,7 @@ import Footer from './components/Footer.jsx';
 import Home from './pages/Home.jsx';
 import MemberDetail from './pages/MemberDetail.jsx';
 import Proceso from './pages/Proceso.jsx';
+import Pitch from './pages/Pitch.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import DeepLearning from './pages/DeepLearning.jsx';
 import NotFound from './pages/NotFound.jsx';
@@ -31,6 +32,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/member/:slug" element={<MemberDetail />} />
+          <Route path="/pitch" element={<Pitch />} />
           <Route path="/proceso" element={<Proceso />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/deep-learning" element={<DeepLearning />} />

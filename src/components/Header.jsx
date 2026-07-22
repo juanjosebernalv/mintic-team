@@ -61,6 +61,7 @@ export default function Header() {
             onClick={scrollTo('codigo')}
             className={activeSection === 'codigo' ? 'active' : ''}
           >Código</a>
+          <NavLink to="/pitch">Pitch</NavLink>
           <NavLink to="/proceso">Proceso</NavLink>
           <NavLink to="/dashboard">Dashboard</NavLink>
           <NavLink to="/deep-learning">Deep Learning</NavLink>
